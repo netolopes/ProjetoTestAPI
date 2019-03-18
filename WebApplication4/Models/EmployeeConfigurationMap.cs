@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
@@ -10,8 +11,17 @@ namespace WebApplication4.Models
     {
         public EmployeeConfigurationMap()
         {
-            ToTable("Employees");
-            HasKey(e => e.Id);
+            ToTable("dbo.Employees");
+         
+            // Id is the primary key
+            HasKey(p => p.Id);
+            // Id auto increment no sql server (IDENTITY)
+            Property(p => p.Id).
+                    HasColumnName("Id").
+                    HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity).
+                    IsRequired();
+
+
 
             Property(e => e.Name)
                 .IsRequired()
@@ -39,7 +49,6 @@ namespace WebApplication4.Models
                 .HasMaxLength(150);
 
             Property(e => e.Teste)
-               .IsRequired()
                .HasColumnType("varchar")
                .HasMaxLength(150);
 

@@ -10,7 +10,7 @@ namespace WebApplication4.Models
     {
         private Contexto db = null;
         private DbSet<T> table = null;
-
+        // ProductContext context = new ProductContext();
         public GenericRepository()
         {
             this.db = new Contexto();
@@ -41,12 +41,15 @@ namespace WebApplication4.Models
         public T SelectByID(object id)
         {
             return table.Find(id);
+            // var result = (from r in context.Products where r.Id == Id select r).FirstOrDefault();
+          //  return result;
         }
 
         public void Update(T obj)
         {
             table.Attach(obj);
             db.Entry(obj).State = EntityState.Modified;
+            // context.Entry(p).State = System.Data.Entity.EntityState.Modified;
         }
     }
 }

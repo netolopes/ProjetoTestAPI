@@ -1,4 +1,7 @@
-﻿@model IEnumerable<WebApplication4.Models.Employee>
+﻿@model PagedList.IPagedList<WebApplication4.Models.Employee>
+@using PagedList.Mvc;
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
 @{
     ViewBag.Title = "Index";
@@ -11,61 +14,87 @@
 </p>
 
 
+@using (Html.BeginForm())
+{
+    <p>
+       
+        <img src="@Url.Content("~/Content/brasil.jpg")" height="50px" width="50px" />
+        
+    </p>
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+    <p>
+        <a  style="color:red" target="_blank" href="/Employee/RelatorioEmployees?pdf=true"><b>****Gerar PDF modelo 1***</b></a>
+    </p>
+    <p>
+        <a style="color:red" target="_blank" href="/Employee/RelatorioPdf?pdf=true"><b>****Gerar PDF modelo 2***</b></a>
+    </p>
+
+}
+
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>
+                        @Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Father Name", "Index", new { sortOrder = ViewBag.FatherNameSortParm })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Mother Name", "Index", new { sortOrder = ViewBag.MotherNameSortParm })
+                    </th>
+                    <th>
+                        Designation
+                    </th>
+                    <th>
+                        Dept
+                    </th>
+                    <th>
+                        Teste
+                    </th>
+                    <th></th>
+                </tr>
 
 
-<table class="table">
-    <tbody>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FatherName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MotherName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Designation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dept)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Teste)
-            </th>
-            <th></th>
-        </tr>
 
-        @foreach (var item in Model)
-        {
+                @foreach (var item in Model)
+                {
 
 
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FatherName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MotherName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Designation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Dept)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Teste)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FatherName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MotherName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Designation)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Dept)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Teste)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<WebApplication4.Models.M_M.Usuario>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+           aa
+            
+        </th>
+        <th>
+         bb
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+       foreach (var x in item.UsuarioCursos)
+        {
+        <tr>
+            <td>
+              @Html.DisplayFor(modelItem => x.Curso.Descricao) 
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            
+        </tr>
+       }
+    }
+    <tr>
+        <td>
+            <!--
+                DIFERENCA ENTRE RenderPage(nao passa parametro) e HTMLPARTIAL(passa parametros)
+                ex: RenderPage("~/View/Student/Index.cshtml")  ->EVITA DE REESCREVER NOVAMENTE O CODIGO
+                ex:  @@Html.Partial("_TestePartial",Model.AlgumaClasse) ->TEM QUE REESCRVER NOVAMENTE,POREM É MAIS PODEROSO, FUNCIONA COM PARAMETRO MODEL NO FOREACH
+
+            @@Html.Partial("_TestePartial")
+             -->
+        </td>
+    </tr>
+</table>
+
+<table class="table">
+    <tr>
+        <th>
+           id
+        </th>
+        <th>
+           curso
+        </th>
+        <th></th>
+    </tr>
+  
+ @using (Html.BeginForm())
+ {
+    <div class="form-group">
+     
+    </div>
+                    <div class="form-group">
+             
+                        @Html.DropDownList("dados", null, htmlAttributes: new { @class = "form-control" })
+                 
+                    </div>
+                    
+ }
+  
+
+
+        
+     
+   
+</table>

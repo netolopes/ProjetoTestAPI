@@ -7,8 +7,9 @@ namespace WebApplication4.Models
 {
     public class Employee
     {
-        // DataAnnotations
-        public int Id { get; set; }
+
+  
+    public int Id { get; set; }
         public string Name { get; set; }
         public string FatherName { get; set; }
         public string MotherName { get; set; }

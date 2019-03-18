@@ -1,0 +1,49 @@
+﻿@model IEnumerable<WebApplication4.Models._1_M.Student>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Grade.GradeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade.GradeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>
+            <!--
+                DIFERENCA ENTRE RenderPage(nao passa parametro) e HTMLPARTIAL(passa parametros)
+                ex: RenderPage("~/View/Student/Index.cshtml")  ->EVITA DE REESCREVER NOVAMENTE O CODIGO
+                ex:  @@Html.Partial("_TestePartial",Model.AlgumaClasse) ->TEM QUE REESCRVER NOVAMENTE,POREM É MAIS PODEROSO, FUNCIONA COM PARAMETRO MODEL NO FOREACH
+    
+            @@Html.Partial("_TestePartial")
+             -->
+        </td>
+    </tr>
+</table>
