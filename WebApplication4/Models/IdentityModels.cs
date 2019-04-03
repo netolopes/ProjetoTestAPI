@@ -30,6 +30,6 @@ namespace WebApplication4.Models
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<WebApplication4.Models.M_M.Usuario> Usuarios { get; set; }
+       // public System.Data.Entity.DbSet<WebApplication4.Models.M_M.Usuario> Usuarios { get; set; }
     }
 }

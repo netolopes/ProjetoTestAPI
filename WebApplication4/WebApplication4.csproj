@@ -198,35 +198,23 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\UserAPIController.cs" />
-    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\1_M\Grade.cs" />
-    <Compile Include="Models\1_M\MappingProfile.cs" />
-    <Compile Include="Models\1_M\Student.cs" />
-    <Compile Include="Models\1_M\StudentDTO.cs" />
-    <Compile Include="Models\1_M\StudentViewModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Contexto.cs" />
-    <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\EmployeeConfigurationMap.cs" />
+    <Compile Include="Models\Entities\Base.cs" />
+    <Compile Include="Models\Entities\Camera.cs" />
+    <Compile Include="Models\Entities\Portao.cs" />
     <Compile Include="Models\GenericRepository.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\IGenericRepository.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Mapeamento\CursoConfigurationMap.cs" />
-    <Compile Include="Models\Mapeamento\GradeConfigurationMap.cs" />
-    <Compile Include="Models\Mapeamento\StudentConfigurationMap.cs" />
-    <Compile Include="Models\Mapeamento\UsuarioConfigurationMap.cs" />
-    <Compile Include="Models\M_M\Curso.cs" />
-    <Compile Include="Models\M_M\Usuario.cs" />
-    <Compile Include="Models\M_M\UsuarioCurso.cs" />
+    <Compile Include="Models\Mapeamento\CameraConfigurationMap.cs" />
+    <Compile Include="Models\Mapeamento\PortaoConfigurationMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

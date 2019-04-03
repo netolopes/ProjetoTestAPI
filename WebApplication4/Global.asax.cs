@@ -7,7 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using WebApplication4.Models._1_M;
+
 
 namespace WebApplication4
 {
@@ -16,7 +16,7 @@ namespace WebApplication4
         protected void Application_Start()
         {
             //adiciona auto mapper
-            Mapper.Initialize(c => c.AddProfile<MappingProfile>());
+          //  Mapper.Initialize(c => c.AddProfile<MappingProfile>());
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);

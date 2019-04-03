@@ -2,111 +2,221 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using WebApplication4.Models;
-using WebApplication4.Models._1_M;
-using WebApplication4.Models.M_M;
+
+using WebApplication4.Models.Entities;
+
 
 namespace WebApplication4.Controllers
 {
     public class UserAPIController : ApiController
     {
-        //array de studentVM
-        List<StudentViewModel> listaStudentVM = new List<StudentViewModel>();
 
-        private IGenericRepository<Usuario> repository = null;
-        private IGenericRepository<Student> repository_student = null;
-        private IGenericRepository<Grade> repository_grade = null;
-        private IGenericRepository<StudentViewModel> repository_svm = null;
+
+        //Novos
+        private IGenericRepository<Portao> repository_portao = null;
+        private IGenericRepository<Camera> repository_camera = null;
 
         public UserAPIController()
         {
-            this.repository = new GenericRepository<Usuario>();
-            this.repository_student = new GenericRepository<Student>();
-            this.repository_grade = new GenericRepository<Grade>();
-            this.repository_svm = new GenericRepository<StudentViewModel>();
+
+
+            //novos
+            this.repository_portao = new GenericRepository<Portao>();
+            this.repository_camera = new GenericRepository<Camera>();
 
         }
 
 
+        //********************   FUNCIONALIDADES PORTAO **********************************
 
-        // GET:     
-          //  public IList<Student> Get()
-         public IEnumerable<StudentDTO> Get()
+
+        // INFORMA SE  O PORTAO ESTA ABERTO OU FECHADO
+        [ResponseType(typeof(Portao))]
+        [Route("api/UserAPI/EstadoPortao/{id}")]
+        [HttpGet]
+        public string EstadoPortao(int id)
         {
-            // return new string[] { "value1", "value2" };
+            var dados = repository_portao.SelectByID(id);
+            var estado = dados.Estado;
 
-            /*
-             var books = from b in repository.SelectAll()
-                         select new Usuario()
-                         {
-                             UsuarioId = b.UsuarioId,
-                             Name = b.Name
+            Portao p = new Portao();
+            return p.TipoEstado(estado);
+            
+        }
+
+
+        
+        // LIGAR E DESLIGAR PORTAO
+        [ResponseType(typeof(Portao))]
+        [Route("api/UserAPI/Power/{id}/{opcao}")]
+        [HttpGet]
+        public string  Power(int id, int opcao)
+        {
+            var dados = repository_portao.SelectByID(id);
+            var estado = dados.Status;
+
+            Portao p = new Portao();
+            return  p.LigaDesliga(opcao.ToString());
+        
+        }
+
+        //LISTAR TODOS PORTAO
+        [ResponseType(typeof(Portao))]
+        [HttpGet]
+        public IEnumerable<Portao> Get()
+        {
+            var dados = from p in repository_portao.SelectAll()
+                        select new Portao()
+                        {
+                            PortaoId = p.PortaoId,
+                            Ip = p.Ip,
+                            Mac = p.Mac,
+                            Status = p.Status
                          };
 
-                 return books;
-            */
-
-
+                 return dados;
            
-                 //ESQUEMA DE VIEWMODEL JUNTAR AS CLASSES E ADICIONAR OS VALORES CORRESPONDENTES NA VIEW MODEL
-                  var   students = (from s in repository_student.SelectAll()
-                                                 join g in repository_grade.SelectAll()
-                                                 on s.GradeId equals g.GradeId 
-                                                 select new StudentDTO
-                                                 {
-                                                     Id = s.Id,
-                                                     Name = s.Name,
-                                                     GradeId = s.GradeId
-                                                 });
-
-        return students.ToList().Select(Mapper.Map<StudentDTO>);
-            
-
-            /*
-                 //adiciona dados na classe studentVM - automapper MANUAL
-                 foreach (var item in students)
-                 {
-                     //cria o objeto de studentVM
-                     StudentViewModel studentVM = new StudentViewModel();
-
-                     studentVM.Name = item.Name;
-                     studentVM.GradeName = item.Grade.GradeName;
-
-                     //adiciona ao array de studentVm
-                     listaStudentVM.Add(studentVM);
-                 }
-
-                 return listaStudentVM;
-         */
-
-
         }
-      
 
-        // GET: api/UserAPI/5
-        public string Get(int id)
+
+        //LISTAR PORTAO POR ID
+        [ResponseType(typeof(Portao))]
+        [Route("api/UserAPI/PortaoId/{id}")]
+        [HttpGet]
+        public Portao GetPortaoID(int id)
         {
-            return "value";
+            var dados = repository_portao.SelectByID(id);
+            return dados;
+
         }
-        /*
-      // POST: api/UserAPI
-      public void Post([FromBody]string value)
-      {
-      }
 
-      // PUT: api/UserAPI/5
-      public void Put(int id, [FromBody]string value)
-      {
-      }
 
-      // DELETE: api/UserAPI/5
-      public void Delete(int id)
-      {
-      }
-      */
+
+        //Gravar dados,Portao no banco: ip,mac,status
+        // POST: api/UserAPI
+        [ResponseType(typeof(Portao))]
+        [HttpPost]
+        public void Post([FromBody] Portao portao)
+        {
+            if (ModelState.IsValid)
+            {
+
+                repository_portao.Insert(portao);
+                repository_portao.Save();
+
+                var resp = new HttpResponseMessage(HttpStatusCode.Created);
+                throw new HttpResponseException(resp);
+
+            } 
+            
+     
+        }
+
+
+
+
+        //********************   FUNCIONALIDADES CAMERA **********************************
+
+        //LISTAR TODOS CAMERA
+        [ResponseType(typeof(Camera))]
+        [Route("api/UserAPI/GetAllCamera/")]
+        [HttpGet]
+        public IEnumerable<Camera> GetAllCamera()
+        {
+            var dados = from c in repository_camera.SelectAll()
+                        select new Camera()
+                        {
+                            CameraId = c.CameraId,
+                            Ip = c.Ip,
+                            Mac = c.Mac,
+                            Status = c.Status
+                        };
+
+            return dados;
+
+        }
+
+
+
+
+        //LISTAR CAMERA POR ID
+        [ResponseType(typeof(Camera))]
+        [Route("api/UserAPI/CameraId/{id}")]
+        [HttpGet]
+        public Camera GetCameraID(int id)
+        {
+            var dados = repository_camera.SelectByID(id);
+            return dados;
+
+        }
+
+
+
+
+        // LIGAR E DESLIGAR CAMERA
+        [ResponseType(typeof(Camera))]
+        [Route("api/UserAPI/PowerCamera/{id}/{opcao}")]
+        [HttpGet]
+        public string PowerCamera(int id ,int opcao)
+        {
+            var dados = repository_camera.SelectByID(id);
+           // var estado = dados.Status;
+
+            Camera p = new Camera();
+            return p.LigaDesliga(opcao.ToString());
+
+        }
+
+
+
+
+        //Gravar dados,Camera no banco: ip,mac,status
+        // POST: api/UserAPI
+        [ResponseType(typeof(Camera))]
+        [Route("api/UserAPI/GravarCamera/")]
+        [HttpPost]
+        public void GravarCamera([FromBody] Camera camera)
+        {
+            if (ModelState.IsValid)
+            {
+
+                repository_camera.Insert(camera);
+                repository_camera.Save();
+
+                var resp = new HttpResponseMessage(HttpStatusCode.Created);
+                throw new HttpResponseException(resp);
+
+            }
+
+
+        }
+
+
+        // VERIFICAR ATIVACAO
+        [ResponseType(typeof(Camera))]
+        [Route("api/UserAPI/Ativacao/{id}/{ativa}")]
+        [HttpGet]
+        public string Ativacao(int id, int ativa)
+        {
+            var dados = repository_camera.SelectByID(id);
+         
+            Camera p = new Camera();
+            return p.SensorMov(ativa.ToString());
+
+        }
+
+
+        
+
+
+
+
     }
 }

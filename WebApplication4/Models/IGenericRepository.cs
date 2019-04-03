@@ -10,6 +10,7 @@ namespace WebApplication4.Models
     {
         IEnumerable<T> SelectAll();
         T SelectByID(object id);
+        T ByID(int id);
         void Insert(T obj);
         void Update(T obj);
         void Delete(object id);

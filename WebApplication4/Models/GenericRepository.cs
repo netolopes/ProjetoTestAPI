@@ -17,6 +17,11 @@ namespace WebApplication4.Models
             table = db.Set<T>();
         }
 
+        public T ByID(int id)
+        {
+            return table.Find(id);
+        }
+
         public void Delete(object id)
         {
             T existing = table.Find(id);

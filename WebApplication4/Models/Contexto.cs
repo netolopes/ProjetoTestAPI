@@ -4,8 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Web;
-using WebApplication4.Models._1_M;
-using WebApplication4.Models.M_M;
+using WebApplication4.Models.Entities;
 using WebApplication4.Models.Mapeamento;
 
 namespace WebApplication4.Models
@@ -19,13 +18,12 @@ namespace WebApplication4.Models
             Database.SetInitializer<Contexto>(null);
         }
         //cria a tabela no banco como: "Employees" ao executar o projeto sem necessitar de migrations!
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Grade> Grades { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Curso> Cursos { get; set; }
-        public DbSet<UsuarioCurso> UsuarioCurso { get; set; }
-        
+      
+
+        public DbSet<Portao> Portaos { get; set; }
+        public DbSet<Camera> Cameras { get; set; }
+
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -40,12 +38,8 @@ namespace WebApplication4.Models
            
 
           //CHAMA A CLASSE DO MAPEAMENTO DA ENTIDADE
-            modelBuilder.Configurations.Add(new EmployeeConfigurationMap());
-            modelBuilder.Configurations.Add(new StudentConfigurationMap());
-            modelBuilder.Configurations.Add(new GradeConfigurationMap());
-            modelBuilder.Configurations.Add(new UsuarioConfigurationMap());
-            modelBuilder.Configurations.Add(new CursoConfigurationMap());
-           // modelBuilder.Configurations.Add(new UsuarioCursoConfigurationMap());
+            modelBuilder.Configurations.Add(new PortaoConfigurationMap());
+            modelBuilder.Configurations.Add(new CameraConfigurationMap());
 
         }
 
