@@ -1,0 +1,84 @@
+USE [bdRepository]
+GO
+
+/****** Object:  Table [dbo].[Camera]    Script Date: 03/04/2019 12:22:38 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Camera](
+	[CameraId] [int] IDENTITY(1,1) NOT NULL,
+	[Ip] [nchar](100) NULL,
+	[Mac] [nchar](100) NULL,
+	[Status] [nchar](10) NULL,
+	[SensorMov] [int] NULL,
+ CONSTRAINT [PK_Camera] PRIMARY KEY CLUSTERED 
+(
+	[CameraId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+****************************************************************
+
+
+USE [bdRepository]
+GO
+
+/****** Object:  Table [dbo].[Portao]    Script Date: 03/04/2019 12:23:07 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Portao](
+	[PortaoId] [int] IDENTITY(1,1) NOT NULL,
+	[Ip] [nchar](100) NULL,
+	[Mac] [nchar](100) NULL,
+	[Status] [nchar](10) NULL,
+	[Estado] [nchar](10) NULL,
+ CONSTRAINT [PK_Portao] PRIMARY KEY CLUSTERED 
+(
+	[PortaoId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+**************************************************************
+USE [bdRepository]
+GO
+
+INSERT INTO [dbo].[Portao]
+           ([Ip]
+           ,[Mac]
+           ,[Status]
+           ,[Estado])
+     VALUES
+           (<Ip, nchar(100),>
+           ,<Mac, nchar(100),>
+           ,<Status, nchar(10),>
+           ,<Estado, nchar(10),>)
+GO
+
+**************************************************************
+USE [bdRepository]
+GO
+
+INSERT INTO [dbo].[Camera]
+           ([Ip]
+           ,[Mac]
+           ,[Status]
+           ,[SensorMov])
+     VALUES
+           (<Ip, nchar(100),>
+           ,<Mac, nchar(100),>
+           ,<Status, nchar(10),>
+           ,<SensorMov, int,>)
+GO
+
+
